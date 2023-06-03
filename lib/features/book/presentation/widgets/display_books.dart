@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_graphql/core/reusables/custom_text.dart';
+import 'package:flutter_graphql/features/book/presentation/bloc/book_bloc.dart';
 import 'package:flutter_graphql/features/book/presentation/widgets/book_card.dart';
 
 class DisplayBooks extends StatelessWidget {
@@ -6,17 +9,36 @@ class DisplayBooks extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Expanded(
-      child: ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: 5,
-        itemBuilder: ((context, index) {
-          return const BookCard(
-              author: 'Juan Dela Cruz',
-              title: 'Ang Pagbabalik Ni Juan',
-              year: 2023);
-        }),
-      ),
+    return BlocBuilder<BookBloc, BookState>(
+      builder: (context, state) {
+        if (state is BookInitial) {
+          // fetch books from API.
+          context.read<BookBloc>().add(const GetBooksFromAPI());
+        }
+        if (state is LoadingState) {
+          return const Center(child: CircularProgressIndicator());
+        }
+        if (state is BookUpdated) {
+          if (state.books.isNotEmpty) {
+            return Expanded(
+              child: ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: state.books.length,
+                itemBuilder: ((context, index) {
+                  return BookCard(
+                      author: state.books[index].author,
+                      title: state.books[index].title,
+                      year: state.books[index].year);
+                }),
+              ),
+            );
+          }
+          return const Expanded(
+            child: Center(child: CustomText(text: 'Add Book')),
+          );
+        }
+        return const SizedBox.shrink();
+      },
     );
   }
 }
