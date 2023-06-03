@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graphql/core/constants/constants.dart';
 import 'package:flutter_graphql/core/reusables/custom_text.dart';
+import 'package:flutter_graphql/features/book/presentation/pages/add_book_screen.dart';
 import 'package:flutter_graphql/features/book/presentation/pages/home_screen.dart';
 
 class Home extends StatefulWidget {
@@ -11,9 +12,10 @@ class Home extends StatefulWidget {
 }
 
 class _HomeState extends State<Home> {
-  final int _currentIndex = 0;
+  int _currentIndex = 0;
   final List<Widget> screens = [
     const HomeScreen(),
+    const AddBookScreen(),
   ];
   @override
   Widget build(BuildContext context) {
@@ -31,7 +33,11 @@ class _HomeState extends State<Home> {
       body: screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap: (index) {},
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
         backgroundColor: Constants.kBlueAccent,
         type: BottomNavigationBarType.fixed,
         showUnselectedLabels: false,
