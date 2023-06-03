@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graphql/core/constants/constants.dart';
 import 'package:flutter_graphql/core/splash_screen/splash_screen.dart';
+import 'package:flutter_graphql/features/book/data/repository/book_repo.dart';
+import 'package:flutter_graphql/features/book/presentation/bloc/book_bloc.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -16,11 +19,17 @@ class BookApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      title: 'Book App',
-      theme: Constants.aTheme,
-      home: const SplashScreen(),
+    return RepositoryProvider(
+      create: ((context) => BookRepo()),
+      child: BlocProvider(
+        create: (context) => BookBloc(),
+        child: MaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: 'Book App',
+          theme: Constants.aTheme,
+          home: const SplashScreen(),
+        ),
+      ),
     );
   }
 }
