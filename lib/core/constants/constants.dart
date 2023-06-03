@@ -23,6 +23,12 @@ class Constants {
       ),
     ),
   );
+
+  // Border Decoration
+  static const kBlackBorderDecoration =
+      OutlineInputBorder(borderSide: BorderSide(color: Constants.kBlack87));
+
+  // Book Decoration Img
   static const DecorationImage bookDecorationImg = DecorationImage(
       image: AssetImage(
     'assets/book_img.png',
@@ -33,8 +39,10 @@ class Constants {
   static const Color kBlueAccent = Colors.blueAccent;
   static const Color kBlack87 = Colors.black87;
   static const Color kWhite = Colors.white;
+  static const Color kCyan = Colors.cyan;
+  static const Color kTransparent = Colors.transparent;
 
-  //bottom navigation bar items
+  // Bottom navigation bar items
   static const List<BottomNavigationBarItem> kBottomNavigationBarItems = [
     BottomNavigationBarItem(
         icon: FaIcon(FontAwesomeIcons.book), label: "Books", tooltip: 'Books'),
