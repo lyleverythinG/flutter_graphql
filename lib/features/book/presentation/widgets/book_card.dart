@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_graphql/core/constants/constants.dart';
+import 'package:flutter_graphql/core/reusables/custom_text.dart';
 
 class BookCard extends StatelessWidget {
   final String? id;
@@ -20,12 +22,13 @@ class BookCard extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(20),
       ),
-      color: Colors.blueAccent,
+      color: Constants.kBlueAccent,
       elevation: 3,
       child: Column(
         children: [
           Row(
-            children: <Widget>[
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Column(
@@ -34,28 +37,31 @@ class BookCard extends StatelessWidget {
                   children: <Widget>[
                     Row(
                       children: [
-                        Text(
-                          author,
-                          style: const TextStyle(
-                              color: Colors.black87,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 17),
+                        CustomText(
+                          text: author,
                         ),
                       ],
                     ),
-                    Text(
-                      title,
+                    CustomText(
+                      text: title,
                     ),
                     Row(
                       children: [
-                        const Text(
-                          'Year: ',
+                        const CustomText(
+                          text: 'Year: ',
                         ),
-                        Text(year.toString()),
+                        CustomText(text: year.toString()),
                       ],
                     ),
                   ],
                 ),
+              ),
+              const Expanded(child: SizedBox.shrink()),
+              Container(
+                height: 100,
+                width: 100,
+                decoration:
+                    const BoxDecoration(image: Constants.bookDecorationImg),
               ),
             ],
           ),
