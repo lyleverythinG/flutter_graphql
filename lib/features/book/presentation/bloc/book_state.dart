@@ -1,6 +1,23 @@
 part of 'book_bloc.dart';
 
-@immutable
-abstract class BookState {}
+abstract class BookState extends Equatable {
+  const BookState();
+
+  @override
+  List<Object> get props => [];
+}
 
 class BookInitial extends BookState {}
+
+class LoadingState extends BookState {
+  const LoadingState();
+}
+
+class BookUpdated extends BookState {
+  final List<BookModel> books;
+
+  const BookUpdated({required this.books});
+
+  @override
+  List<Object> get props => [books];
+}
