@@ -22,6 +22,10 @@ class Constants {
       ),
     ),
   );
+  static const DecorationImage bookDecorationImg = DecorationImage(
+      image: AssetImage(
+    'assets/book_img.png',
+  ));
 
   // colors
   static const Color kBlue = Colors.blue;
