@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Constants {
   // Theme Data
@@ -22,11 +23,26 @@ class Constants {
       ),
     ),
   );
+  static const DecorationImage bookDecorationImg = DecorationImage(
+      image: AssetImage(
+    'assets/book_img.png',
+  ));
 
   // colors
   static const Color kBlue = Colors.blue;
   static const Color kBlueAccent = Colors.blueAccent;
   static const Color kBlack87 = Colors.black87;
+  static const Color kWhite = Colors.white;
+
+  //bottom navigation bar items
+  static const List<BottomNavigationBarItem> kBottomNavigationBarItems = [
+    BottomNavigationBarItem(
+        icon: FaIcon(FontAwesomeIcons.book), label: "Books", tooltip: 'Books'),
+    BottomNavigationBarItem(
+        icon: FaIcon(FontAwesomeIcons.bookMedical),
+        label: "Add Books",
+        tooltip: 'Add Books'),
+  ];
 
   // Sizes
   static const p4 = 4.0;
