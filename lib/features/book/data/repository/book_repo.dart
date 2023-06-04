@@ -14,18 +14,15 @@ class BookRepo {
         QueryOptions(
           fetchPolicy: FetchPolicy.noCache,
           document: gql("""
-           query Query(\$limit: Int) {
-              getBooks(limit: \$limit) {
-                _id
-                author
-                title
-                year
-              }
+          query Query {
+            getBooks {
+              _id
+              author
+              title
+              year
             }
-            """),
-          variables: {
-            'limit': limit,
-          },
+          }
+        """),
         ),
       );
 
@@ -48,7 +45,7 @@ class BookRepo {
     }
   }
 
-  static Future<bool> createBook({
+  static Future<String?> createBook({
     required String title,
     required String author,
     required int year,
@@ -75,10 +72,11 @@ class BookRepo {
       if (result.hasException) {
         throw Exception(result.exception);
       } else {
-        return true;
+        // Returns the id
+        return result.data?['createBook'] as String?;
       }
     } catch (error) {
-      return false;
+      return null;
     }
   }
 
@@ -112,6 +110,31 @@ class BookRepo {
       }
     } catch (error) {
       throw Exception(error);
+    }
+  }
+
+  static Future<bool> deleteBook({required String id}) async {
+    try {
+      QueryResult result = await client.mutate(
+        MutationOptions(
+          fetchPolicy: FetchPolicy.noCache,
+          document: gql("""
+            mutation Mutation(\$id: ID!) {
+              deleteBook(ID: \$id)
+            }
+          """),
+          variables: {
+            "id": id,
+          },
+        ),
+      );
+      if (result.hasException) {
+        throw Exception(result.exception);
+      } else {
+        return true;
+      }
+    } catch (error) {
+      return false;
     }
   }
 }

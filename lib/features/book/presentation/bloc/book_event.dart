@@ -28,3 +28,14 @@ class UpdateBookEvent extends BookEvent {
   @override
   List<Object> get props => [book, bookIndex];
 }
+
+class DeleteBookEvent extends BookEvent {
+  final int bookIndex;
+  final String bookId;
+  const DeleteBookEvent({
+    required this.bookId,
+    required this.bookIndex,
+  });
+  @override
+  List<Object> get props => [bookId, bookIndex];
+}

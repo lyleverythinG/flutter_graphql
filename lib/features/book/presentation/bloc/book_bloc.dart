@@ -1,8 +1,10 @@
 import 'dart:developer' as developer;
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graphql/features/book/data/repository/book_repo.dart';
 import 'package:flutter_graphql/features/book/domain/model/book.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 part 'book_event.dart';
 part 'book_state.dart';
 
@@ -25,14 +27,20 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       // Add Book Event
       try {
         emit(const LoadingState());
-        final isBookAdded = await BookRepo.createBook(
+        final bookId = await BookRepo.createBook(
             author: event.bookInfo.author,
             title: event.bookInfo.title,
             year: event.bookInfo.year);
 
         // Inserts the newly added book to the end of the list.
-        if (isBookAdded) {
-          books.add(event.bookInfo);
+        debugPrint('bookId $bookId');
+        if (bookId != null) {
+          BookModel currentBook = BookModel(
+              id: bookId,
+              author: event.bookInfo.author,
+              title: event.bookInfo.title,
+              year: event.bookInfo.year);
+          books.add(currentBook);
         }
         emit(BookUpdated(books: books));
       } catch (e) {
@@ -50,6 +58,26 @@ class BookBloc extends Bloc<BookEvent, BookState> {
 
         // Updates the current book info.
         books[event.bookIndex] = event.book;
+        emit(BookUpdated(books: books));
+      } catch (e) {
+        developer.log('Error Updating Book Info: $e',
+            name: 'UpdatingBookError');
+      }
+    });
+
+    on<DeleteBookEvent>((event, emit) async {
+      // Delete Book Event
+      try {
+        emit(const LoadingState());
+        bool isBookDeleted = await BookRepo.deleteBook(
+          id: event.bookId,
+        );
+
+        // Updates the current book info.
+        if (isBookDeleted) {
+          books.removeAt(event.bookIndex);
+          Fluttertoast.showToast(msg: 'deleted successfully');
+        }
         emit(BookUpdated(books: books));
       } catch (e) {
         developer.log('Error Updating Book Info: $e',
