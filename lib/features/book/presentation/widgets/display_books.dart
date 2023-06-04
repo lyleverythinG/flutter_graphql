@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_graphql/core/reusables/custom_text.dart';
 import 'package:flutter_graphql/features/book/presentation/bloc/book_bloc.dart';
+import 'package:flutter_graphql/features/book/presentation/pages/edit_book_info_screen.dart';
 import 'package:flutter_graphql/features/book/presentation/widgets/book_card.dart';
 
 class DisplayBooks extends StatelessWidget {
@@ -25,10 +26,23 @@ class DisplayBooks extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemCount: state.books.length,
                 itemBuilder: ((context, index) {
-                  return BookCard(
-                      author: state.books[index].author,
-                      title: state.books[index].title,
-                      year: state.books[index].year);
+                  return GestureDetector(
+                    onTap: () {
+                      Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                          builder: (c) => EditBookInfoScreen(
+                            bookIndex: index,
+                            bookModel: state.books[index],
+                          ),
+                        ),
+                      );
+                    },
+                    child: BookCard(
+                        author: state.books[index].author,
+                        title: state.books[index].title,
+                        year: state.books[index].year),
+                  );
                 }),
               ),
             );

@@ -44,7 +44,7 @@ class _AddBookScreenState extends State<AddBookScreen> {
                   Constants.gapH16,
                   const Align(
                       alignment: Alignment.topLeft,
-                      child: CustomText(text: 'Doctor Name:')),
+                      child: CustomText(text: 'Author Name:')),
                   ProvideBookInfo(
                     controller: bookAuthorNameC,
                     hintText: 'Enter Author Name',
