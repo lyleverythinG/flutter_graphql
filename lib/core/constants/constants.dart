@@ -28,6 +28,14 @@ class Constants {
   static const kBlackBorderDecoration =
       OutlineInputBorder(borderSide: BorderSide(color: Constants.kBlack87));
 
+  // Dismissible Container
+  static Container dismissibleContainer = Container(
+    color: Constants.kRedAccent,
+    child: const Center(
+      child: Icon(Icons.delete),
+    ),
+  );
+
   // Book Decoration Img
   static const DecorationImage bookDecorationImg = DecorationImage(
       image: AssetImage(
