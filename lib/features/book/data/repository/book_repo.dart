@@ -81,4 +81,37 @@ class BookRepo {
       return false;
     }
   }
+
+  static Future updateBook({
+    required BookModel bookModel,
+  }) async {
+    try {
+      QueryResult result = await client.mutate(
+        MutationOptions(
+          fetchPolicy: FetchPolicy.noCache,
+          document: gql(
+            """
+              mutation Mutation(\$id: ID!, \$bookInput: BookInput) {
+                updateBook(ID: \$id, bookInput: \$bookInput)
+              }
+            """,
+          ),
+          variables: {
+            "id": bookModel.id,
+            "bookInput": {
+              "title": bookModel.title,
+              "author": bookModel.author,
+              "year": bookModel.year,
+            }
+          },
+        ),
+      );
+
+      if (result.hasException) {
+        throw Exception(result.exception);
+      }
+    } catch (error) {
+      throw Exception(error);
+    }
+  }
 }
