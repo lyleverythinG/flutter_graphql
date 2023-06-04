@@ -41,6 +41,7 @@ class Constants {
   static const Color kWhite = Colors.white;
   static const Color kCyan = Colors.cyan;
   static const Color kTransparent = Colors.transparent;
+  static const Color kRedAccent = Colors.redAccent;
 
   // Bottom navigation bar items
   static const List<BottomNavigationBarItem> kBottomNavigationBarItems = [
