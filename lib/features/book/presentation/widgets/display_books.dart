@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:flutter_graphql/core/reusables/custom_text.dart';
+import 'package:flutter_graphql/core/constants/constants.dart';
 import 'package:flutter_graphql/features/book/presentation/bloc/book_bloc.dart';
 import 'package:flutter_graphql/features/book/presentation/pages/edit_book_info_screen.dart';
+import 'package:flutter_graphql/features/book/presentation/widgets/add_book_text.dart';
 import 'package:flutter_graphql/features/book/presentation/widgets/book_card.dart';
 
 class DisplayBooks extends StatelessWidget {
@@ -26,30 +27,36 @@ class DisplayBooks extends StatelessWidget {
                 physics: const BouncingScrollPhysics(),
                 itemCount: state.books.length,
                 itemBuilder: ((context, index) {
-                  return GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (c) => EditBookInfoScreen(
-                            bookIndex: index,
-                            bookModel: state.books[index],
-                          ),
-                        ),
-                      );
+                  return Dismissible(
+                    key: Key(state.books[index].id!),
+                    background: Constants.dismissibleContainer,
+                    onDismissed: (direction) {
+                      context.read<BookBloc>().add(DeleteBookEvent(
+                          bookIndex: index, bookId: state.books[index].id!));
                     },
-                    child: BookCard(
-                        author: state.books[index].author,
-                        title: state.books[index].title,
-                        year: state.books[index].year),
+                    child: GestureDetector(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (c) => EditBookInfoScreen(
+                              bookIndex: index,
+                              bookModel: state.books[index],
+                            ),
+                          ),
+                        );
+                      },
+                      child: BookCard(
+                          author: state.books[index].author,
+                          title: state.books[index].title,
+                          year: state.books[index].year),
+                    ),
                   );
                 }),
               ),
             );
           }
-          return const Expanded(
-            child: Center(child: CustomText(text: 'Add Book')),
-          );
+          return const AddBookText();
         }
         return const SizedBox.shrink();
       },
