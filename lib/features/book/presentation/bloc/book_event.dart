@@ -18,9 +18,13 @@ class AddBookEvent extends BookEvent {
   List<Object> get props => [bookInfo];
 }
 
-class BookUpdate extends BookEvent {
-  final List<BookModel> books;
-  const BookUpdate({required this.books});
+class UpdateBookEvent extends BookEvent {
+  final int bookIndex;
+  final BookModel book;
+  const UpdateBookEvent({
+    required this.book,
+    required this.bookIndex,
+  });
   @override
-  List<Object> get props => [books];
+  List<Object> get props => [book, bookIndex];
 }
