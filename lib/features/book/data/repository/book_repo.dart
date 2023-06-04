@@ -14,18 +14,15 @@ class BookRepo {
         QueryOptions(
           fetchPolicy: FetchPolicy.noCache,
           document: gql("""
-           query Query(\$limit: Int) {
-              getBooks(limit: \$limit) {
-                _id
-                author
-                title
-                year
-              }
+          query Query {
+            getBooks {
+              _id
+              author
+              title
+              year
             }
-            """),
-          variables: {
-            'limit': limit,
-          },
+          }
+        """),
         ),
       );
 
