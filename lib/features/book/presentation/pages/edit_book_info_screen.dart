@@ -11,10 +11,12 @@ import 'package:fluttertoast/fluttertoast.dart';
 class EditBookInfoScreen extends StatefulWidget {
   final BookModel bookModel;
   final int bookIndex;
+  final bool isWhiteAppBar;
   const EditBookInfoScreen({
     Key? key,
     required this.bookModel,
     required this.bookIndex,
+    this.isWhiteAppBar = false,
   }) : super(key: key);
 
   @override
@@ -49,7 +51,15 @@ class _EditBookInfoScreenState extends State<EditBookInfoScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        iconTheme: const IconThemeData(
+          color: Colors.black,
+        ),
+        backgroundColor: widget.isWhiteAppBar
+            ? Constants
+                .kWhite // Used white app bar if coming from search bar for uniformity of colors.
+            : null,
+      ),
       body: Container(
         padding: const EdgeInsets.all(8),
         height: MediaQuery.of(context).size.height,
@@ -103,6 +113,12 @@ class _EditBookInfoScreenState extends State<EditBookInfoScreen> {
                             Fluttertoast.showToast(
                               msg: 'Successfully updated book information.',
                             );
+                            if (widget.isWhiteAppBar) {
+                              int count = 0;
+                              // Pop 3 times after updating doctor info if update is coming from search bar home screen.
+                              Navigator.popUntil(
+                                  context, (route) => count++ == 3);
+                            }
                           }
                         },
                         child: CustomElevatedButton(

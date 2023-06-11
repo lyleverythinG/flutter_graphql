@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_graphql/features/book/domain/model/book.dart';
+import 'package:flutter_graphql/features/book/presentation/pages/searched_book_screen.dart';
 
 class SearchDelegateListView extends StatelessWidget {
   final List<BookModel> listOfBooks;
@@ -39,6 +40,14 @@ class SearchDelegateListView extends StatelessWidget {
             // The index/pos of the current book in the actual books list from book bloc.
             int bookIndex = listOfBooks.indexOf(specificBook);
             //TODO: Routes to the searched book info screen when user taps.
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (c) => SearchedBookScreen(
+                          isFromHomeSearch: isFromHomeSearch,
+                          bookIndex: bookIndex,
+                          bookModel: matchedKeyword[index],
+                        )));
           },
         );
       }),
