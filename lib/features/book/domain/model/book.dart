@@ -1,8 +1,17 @@
-class BookModel {
-  final String? id;
-  final String author;
-  final String title;
-  final int year;
+import 'package:hive/hive.dart';
+
+class BookModel extends HiveObject {
+  @HiveField(0)
+  String? id;
+
+  @HiveField(1)
+  String author;
+
+  @HiveField(2)
+  String title;
+
+  @HiveField(3)
+  int year;
 
   BookModel({
     this.id,
