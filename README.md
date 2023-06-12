@@ -1,16 +1,42 @@
-# flutter_graphql
+# Flutter GRAPHQL - Book App
+_BookApp is a mobile application demo built with Flutter that allow users to add, update, and delete a book and its information. Users can also search for books by author name, title, or year. API Link: https://books-demo-apollo-server.herokuapp.com/_
+# NOTE
+- I do not own the API source, I just found it from a youtube and made use of it for making this flutter app demo with GraphQL.
+- This is my first time using GraphQL and currently practicing on how to use it in my mobile apps.
+# Other Features includes:
+- Displays the list of books from the API.
+- Viewing book information
+- Local Data Persistence using HIVE.
+- Widget Tested.
 
-A new Flutter project.
+# STATE MANAGEMENT 
+_The app uses the Bloc state management pattern to manage its state, which helps keep the code organized and maintanable as the app grows._
 
-## Getting Started
+# ARCHITECTURE
+_The app uses a combination of Flutter Bloc Architecture and Clean Architecture which helps to keep the code organized and maintenable as the app grows._
 
-This project is a starting point for a Flutter application.
+# How to Setup the Project
 
-A few resources to get you started if this is your first Flutter project:
+## Installing Flutter on windows
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
+Follow guide from the official documentation if needed [official guide](https://docs.flutter.dev/get-started/install/windows).
 
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Install FVM
+In order to run the project, you need to install FVM (Flutter Version Management).
+Follow guide from the official documentation if needed [official guide](https://fvm.app/docs/getting_started/installation/).
+
+## Install the Flutter Version (3.7.7)
+
+using command: `fvm install 3.7.7`. 
+
+## Run the command to use the Flutter Version.
+
+`fvm use 3.7.7`
+
+## Run the command to update packages.
+
+`fvm flutter pub get`
+## Run the Command For HIVE Setup
+`flutter packages pub run build_runner build`
+
+## Run the app using the command `fvm flutter run`
