@@ -24,15 +24,6 @@ void main() {
       expect(appBar, findsOneWidget);
     });
 
-    testWidgets('Bottom navigation bar exists', (WidgetTester tester) async {
-      await tester.pumpWidget(BlocProvider(
-        create: (context) => BookBloc(),
-        child: const MaterialApp(home: Home()),
-      ));
-      final bottomNavBar = find.byType(BottomNavigationBar);
-      expect(bottomNavBar, findsOneWidget);
-    });
-
     testWidgets('Search bar icon exist', (WidgetTester tester) async {
       await tester.pumpWidget(BlocProvider(
         create: (context) => BookBloc(),
@@ -40,6 +31,15 @@ void main() {
       ));
       final searchIcon = find.byIcon(Icons.search);
       expect(searchIcon, findsOneWidget);
+    });
+
+    testWidgets('Bottom navigation bar exists', (WidgetTester tester) async {
+      await tester.pumpWidget(BlocProvider(
+        create: (context) => BookBloc(),
+        child: const MaterialApp(home: Home()),
+      ));
+      final bottomNavBar = find.byType(BottomNavigationBar);
+      expect(bottomNavBar, findsOneWidget);
     });
   });
 }
