@@ -6,9 +6,7 @@ class BookRepo {
   static GraphQLConfig graphQLConfig = GraphQLConfig();
   static GraphQLClient client = graphQLConfig.clientToQuery();
 
-  static Future<List<BookModel>> getBooks({
-    required int limit,
-  }) async {
+  static Future<List<BookModel>> getBooks() async {
     try {
       QueryResult result = await client.query(
         QueryOptions(
@@ -35,10 +33,10 @@ class BookRepo {
           return [];
         }
 
-        List<BookModel> feelings =
-            res.map((feeling) => BookModel.fromMap(map: feeling)).toList();
+        List<BookModel> books =
+            res.map((book) => BookModel.fromMap(map: book)).toList();
 
-        return feelings;
+        return books;
       }
     } catch (error) {
       return [];
