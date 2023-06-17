@@ -16,7 +16,7 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       // Get Books Event
       try {
         emit(const LoadingState());
-        books = await BookRepo.getBooks(limit: 5);
+        books = await BookRepo.getBooks();
         emit(BookUpdated(books: books));
       } catch (e) {
         developer.log('Error getting book/s: $e', name: 'GetBooksError');
