@@ -13,6 +13,10 @@ class LoadingState extends BookState {
   const LoadingState();
 }
 
+class BookUpdatedMsg extends BookState {
+  const BookUpdatedMsg();
+}
+
 class BookUpdated extends BookState {
   final List<BookModel> books;
 

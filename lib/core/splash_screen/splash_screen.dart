@@ -1,5 +1,7 @@
 import 'dart:async';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_graphql/features/book/presentation/bloc/book_bloc.dart';
 import 'package:flutter_graphql/features/book/presentation/pages/home.dart';
 import 'package:lottie/lottie.dart';
 
@@ -17,7 +19,13 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
     _timer = Timer(const Duration(seconds: 3), () async {
       Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: (c) => const Home()));
+          context,
+          MaterialPageRoute(
+              builder: (c) => BlocProvider(
+                    create: (context) =>
+                        BookBloc()..add(const GetBooksFromAPI()),
+                    child: const Home(),
+                  )));
     });
   }
 

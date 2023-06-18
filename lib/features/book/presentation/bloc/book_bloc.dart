@@ -23,6 +23,17 @@ class BookBloc extends Bloc<BookEvent, BookState> {
       }
     });
 
+    on<GetBooks>((event, emit) async {
+      // Get Books Event
+      try {
+        emit(const LoadingState());
+        books = event.books;
+        emit(BookUpdated(books: books));
+      } catch (e) {
+        developer.log('Error getting book/s: $e', name: 'GetBooksError');
+      }
+    });
+
     on<AddBookEvent>((event, emit) async {
       // Add Book Event
       try {
@@ -51,11 +62,10 @@ class BookBloc extends Bloc<BookEvent, BookState> {
     on<UpdateBookEvent>((event, emit) async {
       // Update Book Event
       try {
-        emit(const LoadingState());
         await BookRepo.updateBook(
           bookModel: event.book,
         );
-
+        emit(const BookUpdatedMsg());
         // Updates the current book info.
         books[event.bookIndex] = event.book;
         emit(BookUpdated(books: books));

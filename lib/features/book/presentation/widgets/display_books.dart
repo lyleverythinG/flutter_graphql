@@ -13,10 +13,6 @@ class DisplayBooks extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<BookBloc, BookState>(
       builder: (context, state) {
-        if (state is BookInitial) {
-          // fetch books from API.
-          context.read<BookBloc>().add(const GetBooksFromAPI());
-        }
         if (state is LoadingState) {
           return const Center(child: CircularProgressIndicator());
         }
@@ -36,12 +32,16 @@ class DisplayBooks extends StatelessWidget {
                     },
                     child: GestureDetector(
                       onTap: () {
-                        Navigator.push(
+                        Navigator.pushReplacement(
                           context,
                           MaterialPageRoute(
-                            builder: (c) => EditBookInfoScreen(
-                              bookIndex: index,
-                              bookModel: state.books[index],
+                            builder: (c) => BlocProvider(
+                              create: (context) =>
+                                  BookBloc()..add(GetBooks(books: state.books)),
+                              child: EditBookInfoScreen(
+                                bookIndex: index,
+                                bookModel: state.books[index],
+                              ),
                             ),
                           ),
                         );

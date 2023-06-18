@@ -5,6 +5,7 @@ import 'package:flutter_graphql/core/reusables/custom_button.dart';
 import 'package:flutter_graphql/core/reusables/custom_text.dart';
 import 'package:flutter_graphql/features/book/domain/model/book.dart';
 import 'package:flutter_graphql/features/book/presentation/bloc/book_bloc.dart';
+import 'package:flutter_graphql/features/book/presentation/pages/home.dart';
 import 'package:flutter_graphql/features/book/presentation/widgets/provide_book_info.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 
@@ -27,6 +28,7 @@ class _EditBookInfoScreenState extends State<EditBookInfoScreen> {
   late final bookAuthorNameC = TextEditingController();
   late final bookTitleC = TextEditingController();
   late final bookPublishedC = TextEditingController();
+  late List<BookModel> books;
 
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
@@ -52,6 +54,28 @@ class _EditBookInfoScreenState extends State<EditBookInfoScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: BlocListener<BookBloc, BookState>(
+          listener: (context, state) {
+            if (state is BookUpdated) {
+              books = state.books;
+            }
+          },
+          child: IconButton(
+            icon: const Icon(
+              Icons.arrow_back,
+            ),
+            onPressed: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                      builder: (c) => BlocProvider(
+                            create: (context) =>
+                                BookBloc()..add(GetBooks(books: books)),
+                            child: const Home(),
+                          )));
+            },
+          ),
+        ),
         iconTheme: const IconThemeData(
           color: Colors.black,
         ),
@@ -109,7 +133,7 @@ class _EditBookInfoScreenState extends State<EditBookInfoScreen> {
                           height: MediaQuery.of(context).size.height * 0.05),
                       BlocListener<BookBloc, BookState>(
                         listener: (context, state) {
-                          if (state is BookUpdated) {
+                          if (state is BookUpdatedMsg) {
                             Fluttertoast.showToast(
                               msg: 'Successfully updated book information.',
                             );

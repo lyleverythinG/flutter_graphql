@@ -10,6 +10,13 @@ class GetBooksFromAPI extends BookEvent {
   List<Object> get props => [];
 }
 
+class GetBooks extends BookEvent {
+  final List<BookModel> books;
+  const GetBooks({required this.books});
+  @override
+  List<Object> get props => [books];
+}
+
 class AddBookEvent extends BookEvent {
   final BookModel bookInfo;
 
