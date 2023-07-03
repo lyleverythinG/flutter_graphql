@@ -6,7 +6,6 @@ _BookApp is a mobile application demo built with Flutter that allow users to add
 # Other Features includes:
 - Displays the list of books from the API.
 - Viewing book information
-- Local Data Persistence using HIVE.
 - Widget Tested.
 
 # STATE MANAGEMENT 
@@ -36,7 +35,5 @@ using command: `fvm install 3.7.7`.
 ## Run the command to update packages.
 
 `fvm flutter pub get`
-## Run the Command For HIVE Setup
-`flutter packages pub run build_runner build`
 
 ## Run the app using the command `fvm flutter run`
